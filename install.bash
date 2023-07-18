@@ -6,9 +6,7 @@ if ! command -v kubectl &>/dev/null; then
     exit 1
 fi
 
-# Download the main script
-curl -o ~/change_background.sh https://raw.githubusercontent.com/guyShilo/zsh-kubernetes-context-watcher/master/change_background.sh
-
+cp change_background.sh ~/change_background.sh
 # Make the script executable
 chmod +x ~/change_background.sh
 
@@ -42,7 +40,7 @@ kubectl() {
     local command=$(echo "$1" | awk "{print \$1}")
     # Run your background script before executing the kubectl command
     if [ "$command" = "config" ] && [[ "$2" == *"use-context"* ]]; then
-        bash -x ~/change_background.sh $k8s_context_watcher_default_background_color
+        bash ~/change_background.sh $k8s_context_watcher_default_background_color
     fi
 }
 '
